@@ -26,6 +26,11 @@ class PhotosCollectionViewController: UIViewController, UICollectionViewDataSour
         updateViews()
     }
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        cache.clear()
+    }
+    
     @IBAction func goToPreviousSol(_ sender: Any?) {
         guard let solDescription = solDescription else { return }
         guard let solDescriptions = roverInfo?.solDescriptions else { return }
@@ -200,6 +205,7 @@ class PhotosCollectionViewController: UIViewController, UICollectionViewDataSour
     }
     private var photoReferences = [MarsPhotoReference]() {
         didSet {
+            cache.clear()
             DispatchQueue.main.async { self.collectionView?.reloadData() }
         }
     }
